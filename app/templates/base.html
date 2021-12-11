@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', path='/css/styles.css') }}">
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>
         Fruit Analyzer
     </title>
@@ -25,11 +26,17 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/user/login">Sign In</a>
+                <li class="nav-item d-flex align-items-center justify-content-center">
+                    <p class="nav-item m-0 mt-2 ml-3">Wallet:</p>
+                </li>
+                <li class="nav-item ml-3">
+                    <a class="nav-link" href="/wallet/add">Add</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/user/register">Sign Up</a>
+                    <a class="nav-link" href="/wallet/create">Create</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/panel/">Panel</a>
                 </li>
             </ul>
           </div>

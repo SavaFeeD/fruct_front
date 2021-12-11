@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div class="row mt-4">
+    <div class="col-5">
+        <div class="wallet">
+            <label for="hash_wallet_value" id="hash_wallet_copy">
+                {{ wallet.hash }}
+                <img class="img-copy" src="{{ url_for('static', path='/img/copy.png') }}" alt="copy">
+            </label>
+            <input type="text" id="hash_wallet_value" value="{{ wallet.balance }}">
+            <h5>Balance: <span>{{ wallet.balance }}</span></h5>
+        </div>
+    </div>
+    <div class="col-7">
+        <div class="chart-eth-container">
+            <canvas id="chart_eth" width="300" height="200"></canvas>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $('#hash_wallet_copy').on('click', function () {
+        const copyText = document.getElementById("hash_wallet_value");
+        copyText.select();
+        document.execCommand("copy");
+
+    })
+
+    let data_conf = {
+      labels: [],
+      datasets: [{
+        label: 'ETH',
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: [],
+      }]
+    };
+
+    let config = {
+        type: 'line',
+        data: data_conf,
+        options: {}
+    };
+
+    const ctx_chart_eth = document.getElementById('chart_eth').getContext('2d');
+    let chart_eth = new Chart(ctx_chart_eth, config);
+
+    let socket = new WebSocket("wss://stream.binance.com:9443/stream?streams=ethusdt@miniTicker");
+
+    socket.onopen = function() {
+        console.log("Соединение установлено.");
+    };
+
+    socket.onclose = function(event) {
+      if (event.wasClean) {
+        console.log('Соединение закрыто чисто');
+      } else {
+        console.log('Обрыв соединения');
+      }
+      console.log('Код: ' + event.code + ' причина: ' + event.reason);
+    };
+
+    socket.onmessage = function(event) {
+        const data = JSON.parse(event.data).data;
+        console.log(`Время ${data['E']}`);
+        console.log(`Курс по доллару ${data['o']}`);
+
+        if (chart_eth.data.labels.length > 15) {
+            chart_eth.data.labels.shift()
+            chart_eth.data.datasets[0].data.shift()
+        }
+        const date = new Date(data['E']);
+        chart_eth.data.datasets[0].data.push(data['o'])
+        chart_eth.data.labels.push(`${date.toLocaleDateString()} ${date.toLocaleTimeString()}`)
+        chart_eth.update();
+    };
+
+    socket.onerror = function(error) {
+      console.log("Ошибка " + error.message);
+    };
+</script>
+{% endblock %}

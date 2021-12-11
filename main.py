@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends
 
 from app.dependencies import get_token_header
 from app.internal import admin
-from app.routers import banks, users
+from app.routers import wallet, panel
 
 from fastapi.staticfiles import StaticFiles
 
@@ -12,8 +12,8 @@ app = FastAPI()
 
 app.mount("/app/static", StaticFiles(directory="./app/static"), name="static")
 
-app.include_router(users.router)
-app.include_router(banks.router)
+app.include_router(wallet.router)
+app.include_router(panel.router)
 app.include_router(
     admin.router,
     prefix="/admin",
@@ -25,4 +25,4 @@ app.include_router(
 
 @app.get("/")
 async def root():
-    return RedirectResponse('/user/login')
+    return RedirectResponse('/wallet/add')

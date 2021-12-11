@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row mt-5 d-flex justify-content-center">
+        <h4><span class="t-primary">Create wallet.</span> Write words for generate address wallet</h4>
+        <div class="col-7">
+            <form id="create_wallet">
+                <div class="mt-5 d-flex">
+                    <input type="text" required class="form-control form-rrn" autocomplete="off" id="words" placeholder="Words">
+                    <div>
+                        <button
+                            type="submit"
+                            class="btn primary-bg btn-lrn"
+                        >CREATE</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#create_wallet').on('submit', function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '/wallet/create',
+                    method: 'post',
+                    dataType: 'json',
+                    data: {
+                        data: $('#words').val(),
+                    },
+                    success: function (data) {
+                        console.log(data)
+                        if (data.status === 'OK') {
+                            $('#alert-success').css("display", "flex");
+                            $('#alert-success-text').text(data.result.msg)
+                        } else {
+                            $('#alert-danger').css("display", 'flex')
+                            $('#alert-danger-text').text(`${data.status}: ${data.result.msg}`)
+                        }
+                    },
+                    error: function (err) {
+                        $('#alert-danger').css("display", 'flex')
+                        $('#alert-danger-text').text(err.responseJSON.detail[0].msg)
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

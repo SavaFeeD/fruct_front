@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row mt-5 d-flex flex-column align-items-center">
+        <h4><span class="t-primary">Hi!</span> Need add or create wallet</h4>
+        <div class="col-7">
+            <form id="add_wallet">
+                <div class="d-flex mt-5">
+                    <input type="text" required class="form-control w-100 form-rrn" id="wallet_hash" autocomplete="off" placeholder="Wallet hash">
+                    <div>
+                        <button
+                            type="submit"
+                            class="btn btn-lrn primary-bg"
+                        >ADD</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#add_wallet').on('submit', function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '/wallet/add',
+                    method: 'post',
+                    dataType: 'json',
+                    data: {
+                        data: $('#wallet_hash').val(),
+                    },
+                    success: function (data) {
+                        console.log(data)
+                        if (data.status === 'OK') {
+                            $('#alert-success').css("display", "flex");
+                            $('#alert-success-text').text(data.result.msg)
+                        } else {
+                            $('#alert-danger').css("display", 'flex')
+                            $('#alert-danger-text').text(`${data.status}: ${data.result.msg}`)
+                        }
+                    },
+                    error: function (err) {
+                        $('#alert-danger').css("display", 'flex')
+                        $('#alert-danger-text').text(err.responseJSON.detail[0].msg)
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
