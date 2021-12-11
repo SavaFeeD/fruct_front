@@ -18,5 +18,5 @@ class Banks(BaseModel):
 class User(BaseModel):
     email: str
     password: str
-    name: str
-    description: Optional[str] = None
+    # name: str
+    # description: Optional[str] = None

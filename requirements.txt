@@ -5,3 +5,4 @@ starlette==0.16.0
 fastapi-sqlalchemy
 jinja2==2.11.3
 alembic
+python-multipart

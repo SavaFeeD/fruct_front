@@ -6,9 +6,11 @@ from app.routers import banks, users
 
 from fastapi.staticfiles import StaticFiles
 
+from fastapi.responses import RedirectResponse
+
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory='./app/static'), name='static')
+app.mount("/app/static", StaticFiles(directory="./app/static"), name="static")
 
 app.include_router(users.router)
 app.include_router(banks.router)
@@ -23,4 +25,4 @@ app.include_router(
 
 @app.get("/")
 async def root():
-    return {"message": "Hello it's Bank Applications!"}
+    return RedirectResponse('/user/login')

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, Form, Depends
 from fastapi.responses import HTMLResponse
 
 from starlette import status
@@ -21,10 +21,27 @@ async def login_page(request: Request):
 
 
 @router.post("/login")
-async def login(body: User):
+async def login(email: str = Form(...), password: str = Form(...)):
     return JSONResponse({
         'result': {
-            'user': body
+            'user': {'email': email, 'password': password},
+            'msg': 'Complete!'
         },
-        'status': status.HTTP_200_OK,
+        'status': 'OK',
+    })
+
+
+@router.get("/register", response_class=HTMLResponse)
+async def login_page(request: Request):
+    return templates.TemplateResponse("register.html", {"request": request})
+
+
+@router.post("/register")
+async def login(email: str = Form(...), password: str = Form(...)):
+    return JSONResponse({
+        'result': {
+            'user': {'email': email, 'password': password},
+            'msg': 'Complete!'
+        },
+        'status': 'OK',
     })

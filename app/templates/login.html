@@ -1,17 +1,80 @@
 {% extends "base.html" %}
 
-{% block title %}Login{% endblock %}
-
 {% block content %}
-<h1>Login</h1>
-<form>
-    <label>
-        Email:
-        <input type="text" name="email" />
-    </label>
-    <label>
-        Password:
-        <input type="password" name="password" />
-    </label>
-</form>
+    <div class="row mt-5">
+        <div class="col-7 pr-5">
+            <form class="pr-5" id="login">
+                <h4><span class="t-primary">Hi!</span> to start using the application <br/> you need to log in</h4>
+                <div class="mb-3 mt-5">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" required class="form-control" id="email" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="pass" class="form-label">Password</label>
+                    <input type="password" required class="form-control" id="pass">
+                </div>
+                <br>
+                <div>
+                    <button
+                        type="submit"
+                        class="btn primary-bg"
+                    >Log in</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-5 pl-5">
+            <div class="helpers-wrap pl-5">
+                <h4 class="t-primary">First steps:</h4>
+                <div class="help-item">
+                    <div class="tool-round">
+                        <img src="{{ url_for('static', path='/img/reg.png') }}" alt="reg">
+                    </div>
+                    <span class="ml-3">Registration</span>
+                </div>
+                <div class="help-item">
+                    <div class="tool-round">
+                        <img src="{{ url_for('static', path='/img/login.png') }}" alt="login">
+                    </div>
+                    <span class="ml-3">Authorization</span>
+                </div>
+                <div class="help-item">
+                    <div class="tool-round">
+                        <img src="{{ url_for('static', path='/img/stats.png') }}" alt="stats">
+                    </div>
+                    <span class="ml-3">View wallet activity</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#login').on('submit', function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '/user/login',
+                    method: 'post',
+                    dataType: 'json',
+                    data: {
+                        email: $('#email').val(),
+                        password: $('#pass').val(),
+                    },
+                    success: function (data) {
+                        console.log(data)
+                        if (data.status === 'OK') {
+                            $('#alert-success').css("display", "flex");
+                            $('#alert-success-text').text(data.result.msg)
+                        } else {
+                            $('#alert-danger').css("display", 'flex')
+                            $('#alert-danger-text').text(`${data.status}: ${data.result.msg}`)
+                        }
+                    },
+                    error: function (err) {
+                        $('#alert-danger').css("display", 'flex')
+                        $('#alert-danger-text').text(err.responseJSON.detail[0].msg)
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
