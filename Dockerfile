@@ -12,4 +12,4 @@ COPY / /app
 
 WORKDIR /app
 
-# ["python", "main.py"]
+CMD ["python3", "uvicorn ", "app.main:app", "--host 0.0.0.0"]
