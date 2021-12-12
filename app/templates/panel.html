@@ -6,12 +6,15 @@
 <div class="row mt-4">
     <div class="col-5">
         <div class="wallet">
-            <label for="hash_wallet_value" id="hash_wallet_copy">
-                {{ wallet.hash }}
-                <img class="img-copy" src="{{ url_for('static', path='/img/copy.png') }}" alt="copy">
-            </label>
-            <input type="text" id="hash_wallet_value" value="{{ wallet.balance }}">
-            <h5>Balance: <span>{{ wallet.balance }}</span></h5>
+            <div class="body">
+                <h2 class="wallet-title">Wallet</h2>
+                <label for="hash_wallet_value" id="hash_wallet_copy">
+                    <div class="crop-hash">{{ wallet.hash }}</div>
+                    <img class="img-copy" src="{{ url_for('static', path='/img/copy.png') }}" alt="copy">
+                </label>
+                <input type="text" id="hash_wallet_value" value="{{ wallet.balance }}">
+            </div>
+            <h5>Balance: <span>{{ wallet.balance }} ETH</span></h5>
         </div>
     </div>
     <div class="col-7">
@@ -27,7 +30,6 @@
         const copyText = document.getElementById("hash_wallet_value");
         copyText.select();
         document.execCommand("copy");
-
     })
 
     let data_conf = {
@@ -69,7 +71,7 @@
         console.log(`Время ${data['E']}`);
         console.log(`Курс по доллару ${data['o']}`);
 
-        if (chart_eth.data.labels.length > 15) {
+        if (chart_eth.data.labels.length > 30) {
             chart_eth.data.labels.shift()
             chart_eth.data.datasets[0].data.shift()
         }

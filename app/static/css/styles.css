@@ -98,26 +98,45 @@ input[type=number]:focus,
 }
 
 .chart-eth-container {
+    border-radius: 10px;
     width: 100%!important;
     height: 400px!important;
+    padding: 10px;
+    background: linear-gradient(35deg, rgba(66, 66, 66, 0.32), rgba(18, 18, 18, 0.01));
 }
 
 #chart_eth {
     width: 100%!important;
-    height: 400px!important;
+    height: 380px!important;
 }
 
 #hash_wallet_value {
     position: absolute!important;
-    left: -100%!important;
+    left: -200%!important;
+    opacity: 0;
 }
 
 #hash_wallet_copy {
     cursor: pointer;
     font-size: 15px;
+    width: 100%;
+    display: flex;
 }
 #hash_wallet_copy:active {
     color: #cf6679;
+}
+#hash_wallet_copy div.crop-hash {
+    max-width: 360px;
+    width: 360px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.wallet-title {
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: rgba(255, 213, 110, 0.56);
 }
 
 .img-copy {
@@ -126,9 +145,23 @@ input[type=number]:focus,
 }
 
 .wallet {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     border-radius: 10px;
     width: 100%;
     height: 250px;
-    padding: 30px;
+    padding: 0;
     background: linear-gradient(35deg, #E1272D, rgba(232, 52, 58, 0.6), #e8343a);
+}
+
+.wallet .body {
+    padding: 20px 30px;
+    padding-bottom: 0;
+}
+
+.wallet h5 {
+    padding: 30px;
+    margin: 0;
+    background: linear-gradient(90deg, rgba(18, 18, 18, 0.1), rgba(18, 18, 18, 0.01), rgba(18, 18, 18, 0.1));
 }
