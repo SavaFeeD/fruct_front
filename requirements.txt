@@ -2,8 +2,6 @@ fastapi==0.70.0
 uvicorn==0.15.0
 pydantic==1.8.2
 starlette==0.16.0
-fastapi-sqlalchemy
 jinja2==2.11.3
-alembic
 python-multipart
 requests

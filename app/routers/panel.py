@@ -25,26 +25,21 @@ async def panel(request: Request):
         row['from'] = wallet
         row['to'] = sha256(f'asd asd {random.randint(1, 200)} ds ds'.encode('utf-8')).hexdigest()
         row['price'] = random.uniform(10.5, 75.5)
+        row['date'] = f'{random.randint(1, 31)}' + f'-{random.randint(1, 12)}' + f'-{random.randint(2000, 2021)}'
+
+    x = [x['date'] for x in trs]
+    y = [y['price'] for y in trs]
     return templates.TemplateResponse("panel.html", {
         "request": request,
         "wallet": {
             "hash": wallet,
             "balance": "0.03123"
         },
-        "transactions": trs,
-    })
-
-
-@router.get("/transactions", response_class=HTMLResponse)
-async def transactions(request: Request):
-    wallet = sha256('word asd sushka'.encode('utf-8')).hexdigest()
-    trs = [{col: ''} for i in range(20) for col in ['from', 'to', 'price']]
-
-    for row in trs:
-        row['from'] = wallet
-        row['to'] = sha256(f'asd asd {random.randint(1, 200)} ds ds'.encode('utf-8')).hexdigest()
-        row['price'] = random.uniform(10.5, 75.5)
-    return templates.TemplateResponse("transactions.html", {
-        "request": request,
-        "transactions": trs,
+        "transactions": {
+            'table': trs,
+            'chart': {
+                'x': x,
+                'y': y
+            }
+        },
     })

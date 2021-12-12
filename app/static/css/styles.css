@@ -97,17 +97,22 @@ input[type=number]:focus,
   box-shadow: none;
 }
 
-.chart-eth-container {
+.chart-container {
     border-radius: 10px;
-    width: 100%!important;
-    height: 400px!important;
     padding: 10px;
     background: linear-gradient(35deg, rgba(66, 66, 66, 0.32), rgba(18, 18, 18, 0.01));
+}
+.chart-eth-container {
+    width: 100%!important;
+    height: 580px!important;
+}
+.chart-transaction {
+    width: 100%;
+    height: 580px;
 }
 
 #chart_eth {
     width: 100%!important;
-    height: 380px!important;
 }
 
 #hash_wallet_value {
@@ -164,4 +169,19 @@ input[type=number]:focus,
     padding: 30px;
     margin: 0;
     background: linear-gradient(90deg, rgba(18, 18, 18, 0.1), rgba(18, 18, 18, 0.01), rgba(18, 18, 18, 0.1));
+}
+
+th, td {
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table-dark {
+    background-color: #212121;
+    border-radius: 10px;
+}
+tr, th {
+    border-top: none!important;
 }

@@ -18,10 +18,39 @@
         </div>
     </div>
     <div class="col-7">
-        <div class="chart-eth-container">
-            <canvas id="chart_eth" width="300" height="200"></canvas>
-        </div>
+
     </div>
+</div>
+<div class="row mt-5 mb-5">
+    <div class="chart-container chart-transaction mb-4">
+        <canvas id="chart_transaction"></canvas>
+    </div>
+
+    <div class="chart-eth-container chart-container mb-4">
+        <canvas id="chart_eth"></canvas>
+    </div>
+
+
+    <table class="table table-dark">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">from</th>
+          <th scope="col">to</th>
+          <th scope="col">price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in transactions.table %}
+        <tr>
+          <th scope="row">{{ loop.index }}</th>
+          <td>{{ row.from }}</td>
+          <td>{{ row.to }}</td>
+          <td>{{ row.price }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 </div>
 
 
@@ -32,17 +61,50 @@
         document.execCommand("copy");
     })
 
+    let x = '{{ transactions.chart['x'] }}'
+    x = x.split('&#39;').join('')
+    x = x.split('[').join('')
+    x = x.split(']').join('')
+    x = x.split(',').join('')
+    x = x.split(' ')
+
+    let y = '{{ transactions.chart['y'] }}'
+    y = y.split('&#39;').join('')
+    y = y.split('[').join('')
+    y = y.split(']').join('')
+    y = y.split(',').join('')
+    y = y.split(' ')
+
     let data_conf = {
-      labels: [],
+      labels: x,
       datasets: [{
-        label: 'ETH',
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgb(255, 99, 132)',
-        data: [],
+        label: 'Transactions',
+        backgroundColor: '#E1272D',
+        borderColor: '#E1272D',
+        data: y,
       }]
     };
 
     let config = {
+        type: 'line',
+        data: data_conf,
+        options: {}
+    };
+
+    const ctx_chart_trs = document.getElementById('chart_transaction').getContext('2d');
+    let chart_trs = new Chart(ctx_chart_trs, config);
+
+    data_conf = {
+      labels: [],
+      datasets: [{
+        label: 'ETH',
+        backgroundColor: 'rgb(6,201,0)',
+        borderColor: 'rgb(6,201,0)',
+        data: [],
+      }]
+    };
+
+    config = {
         type: 'line',
         data: data_conf,
         options: {}
